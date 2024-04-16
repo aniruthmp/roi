@@ -61,9 +61,16 @@
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="humanResourcesDescription" name="humanResourcesDescription" rows="3" readonly>Seasoned developers, data scientists, and DevOps engineers needed for development, model training, and infrastructure management.</textarea>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="text" id="hrRoles" name="hrRoles">
-                        <label class="mdl-textfield__label" for="hrRoles">Roles</label>
+                    <!-- Multi-select dropdown for hrRoles -->
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <select multiple class="mdl-textfield__input" id="hrRoles" name="hrRoles">
+                            <option value="Developer">Developer</option>
+                            <option value="Designer">Designer</option>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Product Manager">Product Manager</option>
+                        </select>
+                        <label class="mdl-textfield__label" for="hrRoles">HR Roles</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="number" id="hrSalaryMin" name="hrSalaryMin">
@@ -156,34 +163,35 @@
                 rateMin: parseInt(document.getElementById('infraRateMin').value),
                 rateMax: parseInt(document.getElementById('infraRateMax').value)
             },
-            software_and_tools: {
+            softwareAndTools: {
                 // description: document.getElementById('softwareDescription').value,
                 rateMin: parseInt(document.getElementById('softwareRateMin').value),
                 rateMax: parseInt(document.getElementById('softwareRateMax').value)
             },
-            human_resources: {
+            humanResources: {
                 // description: document.getElementById('hrDescription').value,
-                roles: document.getElementById('hrRoles').value.split(","),
+                roles: Array.from(document.getElementById("hrRoles").selectedOptions).map(option => option.value),
                 salaryMin: parseInt(document.getElementById('hrSalaryMin').value),
                 salaryMax: parseInt(document.getElementById('hrSalaryMax').value)
             },
-            training_and_fine_tuning: {
+            trainingAndFineTuning: {
                 // description: document.getElementById('trainingDescription').value,
                 rateMin: parseInt(document.getElementById('trainingRateMin').value),
                 rateMax: parseInt(document.getElementById('trainingRateMax').value)
             },
-            ongoing_maintenance: {
+            ongoingMaintenance: {
                 // description: document.getElementById('maintenanceDescription').value,
                 rateMin: parseInt(document.getElementById('maintenanceRateMin').value),
                 rateMax: parseInt(document.getElementById('maintenanceRateMax').value)
             },
-            miscellaneous_costs: {
+            miscellaneousCosts: {
                 // description: document.getElementById('miscDescription').value,
                 rateMin: parseInt(document.getElementById('miscRateMin').value),
                 rateMax: parseInt(document.getElementById('miscRateMax').value)
             }
         };
 
+        // console.log(JSON.stringify(formData));
         // Send the formData to Spring Boot REST API using fetch or XMLHttpRequest
         fetch('http://localhost:8080/api/roi', {
             method: 'POST',

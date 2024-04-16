@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Calculation</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        input[type="text"], select[multiple] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4267B2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #405d9b;
+        }
+        .output {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+        .output label {
+            font-weight: normal;
+            font-size: 18px;
+        }
+        .output input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            font-size: 18px;
+            background-color: transparent;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="title">Cost Details Form</div>
+    <form id="costDetailsForm">
+        <div class="form-group">
+            <label for="guidance">Guidance</label>
+            <input type="text" id="guidance" name="guidance" value="All provided costs are monthly" readonly>
+        </div>
+        <div class="form-group">
+            <label for="infrastructureDescription">Infrastructure Description</label>
+            <input type="text" id="infrastructureDescription" name="infrastructureDescription" value="Cloud computing services needed to host the system." readonly>
+        </div>
+        <div class="form-group">
+            <label for="infrastructureRateMin">Infrastructure Rate Min</label>
+            <input type="text" id="infrastructureRateMin" name="infrastructureRateMin" value="57500" readonly>
+        </div>
+        <div class="form-group">
+            <label for="infrastructureRateMax">Infrastructure Rate Max</label>
+            <input type="text" id="infrastructureRateMax" name="infrastructureRateMax" value="219500" readonly>
+        </div>
+        <div class="form-group">
+            <label for="softwareAndToolsDescription">Software and Tools Description</label>
+            <input type="text" id="softwareAndToolsDescription" name="softwareAndToolsDescription" value="LLMs and other commercial libraries" readonly>
+        </div>
+        <div class="form-group">
+            <label for="softwareAndToolsRateMin">Software and Tools Rate Min</label>
+            <input type="text" id="softwareAndToolsRateMin" name="softwareAndToolsRateMin" value="9000" readonly>
+        </div>
+        <div class="form-group">
+            <label for="softwareAndToolsRateMax">Software and Tools Rate Max</label>
+            <input type="text" id="softwareAndToolsRateMax" name="softwareAndToolsRateMax" value="219500" readonly>
+        </div>
+        <div class="form-group">
+            <label for="humanResourcesDescription">Human Resources Description</label>
+            <input type="text" id="humanResourcesDescription" name="humanResourcesDescription" value="Seasoned developers, data scientists, and DevOps engineers needed for development, model training, and infrastructure management." readonly>
+        </div>
+        <div class="form-group">
+            <label for="humanResourcesSalaryMin">Human Resources Salary Min</label>
+            <input type="text" id="humanResourcesSalaryMin" name="humanResourcesSalaryMin" value="7500" readonly>
+        </div>
+        <div class="form-group">
+            <label for="humanResourcesSalaryMax">Human Resources Salary Max</label>
+            <input type="text" id="humanResourcesSalaryMax" name="humanResourcesSalaryMax" value="18000" readonly>
+        </div>
+        <div class="form-group">
+            <label for="trainingAndFineTuningDescription">Training and Fine Tuning Description</label>
+            <input type="text" id="trainingAndFineTuningDescription" name="trainingAndFineTuningDescription" value="Data acquisition and model customization costs." readonly>
+        </div>
+        <div class="form-group">
+            <label for="trainingAndFineTuningRateMin">Training and Fine Tuning Rate Min</label>
+            <input type="text" id="trainingAndFineTuningRateMin" name="trainingAndFineTuningRateMin" value="5500" readonly>
+        </div>
+        <div class="form-group">
+            <label for="trainingAndFineTuningRateMax">Training and Fine Tuning Rate Max</label>
+            <input type="text" id="trainingAndFineTuningRateMax" name="trainingAndFineTuningRateMax" value="21500" readonly>
+        </div>
+        <div class="form-group">
+            <label for="ongoingMaintenanceDescription">Ongoing Maintenance Description</label>
+            <input type="text" id="ongoingMaintenanceDescription" name="ongoingMaintenanceDescription" value="Monitoring, updates, and retraining costs." readonly>
+        </div>
+        <div class="form-group">
+            <label for="ongoingMaintenanceRateMin">Ongoing Maintenance Rate Min</label>
+            <input type="text" id="ongoingMaintenanceRateMin" name="ongoingMaintenanceRateMin" value="860" readonly>
+        </div>
+        <div class="form-group">
+            <label for="ongoingMaintenanceRateMax">Ongoing Maintenance Rate Max</label>
+            <input type="text" id="ongoingMaintenanceRateMax" name="ongoingMaintenanceRateMax" value="5000" readonly>
+        </div>
+        <div class="form-group">
+            <label for="miscellaneousCostsDescription">Miscellaneous Costs Description</label>
+            <input type="text" id="miscellaneousCostsDescription" name="miscellaneousCostsDescription" value="Legal and compliance considerations, along with documentation needs." readonly>
+        </div>
+        <div class="form-group">
+            <label for="miscellaneousCostsRateMin">Miscellaneous Costs Rate Min</label>
+            <input type="text" id="miscellaneousCostsRateMin" name="miscellaneousCostsRateMin" value="7400" readonly>
+        </div>
+        <div class="form-group">
+            <label for="miscellaneousCostsRateMax">Miscellaneous Costs Rate Max</label>
+            <input type="text" id="miscellaneousCostsRateMax" name="miscellaneousCostsRateMax" value="32800" readonly>
+        </div>
+        <!-- Multi-select dropdown for hrRoles -->
+        <div class="form-group">
+            <label for="hrRoles">HR Roles</label>
+            <select multiple id="hrRoles" name="hrRoles" disabled>
+                <option value="Developers" selected>Developers</option>
+                <option value="Data Scientists">Data Scientists</option>
+                <option value="Engineers" selected>Engineers</option>
+            </select>
+        </div>
+        <!-- Other form elements -->
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+    <!-- Output Section -->
+    <div class="output" id="outputSection" style="display: none;">
+        <h3>Output</h3>
+        <div class="form-group">
+            <label for="netBenefits">Net Benefits</label>
+            <input type="text" id="netBenefits" readonly>
+        </div>
+        <div class="form-group">
+            <label for="roi">ROI</label>
+            <input type="text" id="roi" readonly>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        console.log("Form submitted!"); // Just for testing
+        var formData = {
+            guidance: document.getElementById("guidance").value,
+            infrastructureDescription: document.getElementById("infrastructureDescription").value,
+            infrastructureRateMin: document.getElementById("infrastructureRateMin").value,
+            infrastructureRateMax: document.getElementById("infrastructureRateMax").value,
+            softwareAndToolsDescription: document.getElementById("softwareAndToolsDescription").value,
+            softwareAndToolsRateMin: document.getElementById("softwareAndToolsRateMin").value,
+            softwareAndToolsRateMax: document.getElementById("softwareAndToolsRateMax").value,
+            humanResourcesDescription: document.getElementById("humanResourcesDescription").value,
+            humanResourcesSalaryMin: document.getElementById("humanResourcesSalaryMin").value,
+            humanResourcesSalaryMax: document.getElementById("humanResourcesSalaryMax").value,
+            trainingAndFineTuningDescription: document.getElementById("trainingAndFineTuningDescription").value,
+            trainingAndFineTuningRateMin: document.getElementById("trainingAndFineTuningRateMin").value,
+            trainingAndFineTuningRateMax: document.getElementById("trainingAndFineTuningRateMax").value,
+            ongoingMaintenanceDescription: document.getElementById("ongoingMaintenanceDescription").value,
+            ongoingMaintenanceRateMin: document.getElementById("ongoingMaintenanceRateMin").value,
+            ongoingMaintenanceRateMax: document.getElementById("ongoingMaintenanceRateMax").value,
+            miscellaneousCostsDescription: document.getElementById("miscellaneousCostsDescription").value,
+            miscellaneousCostsRateMin: document.getElementById("miscellaneousCostsRateMin").value,
+            miscellaneousCostsRateMax: document.getElementById("miscellaneousCostsRateMax").value,
+            hrRoles: Array.from(document.getElementById("hrRoles").selectedOptions).map(option => option.value)
+        };
+        console.log(formData); // Just for testing
+        // Here you can add the logic to send the form data to your Spring Boot API
+    }
+</script>
+</body>
+</html>
