@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 @Service
 @Slf4j
@@ -52,8 +51,8 @@ public class CostModelService {
         roi = Math.round(roi * 100.0) / 100.0;
 
         // Output the results
-//        CostModelResponse costModelResponse = new CostModelResponse(netBenefits, roi);
-        CostModelResponse costModelResponse = new CostModelResponse(1010908.15, 756.3);
+        CostModelResponse costModelResponse = new CostModelResponse(netBenefits, roi);
+//        CostModelResponse costModelResponse = new CostModelResponse(1010908.15, 756.3);
         log.info("calculateCost with output: " + costModelResponse.toString());
         watch.stop();
         log.info("calculateCost time elapsed: " + watch.getTime() + " milliseconds");

@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cost Details Form</title>
+    <title>ROI Calculation</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <!-- Material Design Lite -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
@@ -17,7 +14,7 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Cost Details Form</span>
+            <span class="mdl-layout-title" style="text-align: center; width: 100%;">ROI Calculation</span>
         </div>
     </header>
     <main class="mdl-layout__content">
@@ -33,7 +30,6 @@
                     <h4>Infrastructure</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="infrastructureDescription" name="infrastructureDescription" rows="3" readonly>Cloud computing services needed to host the system.</textarea>
-                        <label class="mdl-textfield__label" for="infrastructureDescription">Infrastructure Description</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="number" id="infraRateMin" name="infraRateMin">
@@ -49,7 +45,6 @@
                     <h4>Software and Tools</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="softwareAndToolsDescription" name="softwareAndToolsDescription" rows="3" readonly>LLMs and other commercial libraries</textarea>
-                        <label class="mdl-textfield__label" for="softwareAndToolsDescription">Software and Tools Description</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="number" id="softwareRateMin" name="softwareRateMin">
@@ -65,7 +60,6 @@
                     <h4>Human Resources</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="humanResourcesDescription" name="humanResourcesDescription" rows="3" readonly>Seasoned developers, data scientists, and DevOps engineers needed for development, model training, and infrastructure management.</textarea>
-                        <label class="mdl-textfield__label" for="humanResourcesDescription">Human Resources Description</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="text" id="hrRoles" name="hrRoles">
@@ -85,7 +79,6 @@
                     <h4>Training and Fine Tuning</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="trainingAndFineTuningDescription" name="trainingAndFineTuningDescription" rows="3" readonly>Data acquisition and model customization costs.</textarea>
-                        <label class="mdl-textfield__label" for="trainingAndFineTuningDescription">Training and Fine Tuning Description</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="number" id="trainingRateMin" name="trainingRateMin">
@@ -101,7 +94,6 @@
                     <h4>Ongoing Maintenance</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="ongoingMaintenanceDescription" name="ongoingMaintenanceDescription" rows="3" readonly>Monitoring, updates, and retraining costs.</textarea>
-                        <label class="mdl-textfield__label" for="ongoingMaintenanceDescription">Ongoing Maintenance Description</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="number" id="maintenanceRateMin" name="maintenanceRateMin">
@@ -117,7 +109,6 @@
                     <h4>Miscellaneous Costs</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <textarea class="mdl-textfield__input" type="text" id="miscellaneousCostsDescription" name="miscellaneousCostsDescription" rows="3" readonly>Legal and compliance considerations, along with documentation needs.</textarea>
-                        <label class="mdl-textfield__label" for="miscellaneousCostsDescription">Miscellaneous Costs Description</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
                         <input class="mdl-textfield__input" type="number" id="miscRateMin" name="miscRateMin">
@@ -158,7 +149,6 @@
 
 <script>
     function submitForm() {
-        console.log("Form submitted!"); // Just for testing
         var formData = {
             // guidance: document.getElementById('guidance').value,
             infrastructure: {
@@ -206,12 +196,12 @@
                 // Check if data contains netBenefits and roi fields
                 if (data.hasOwnProperty('netBenefits') && data.hasOwnProperty('roi')) {
                     // Display output
-                    // document.getElementById('netBenefits').innerHTML = 'Net Benefits: ' + data.netBenefits;
-                    // document.getElementById('roi').innerHTML = 'ROI: ' + data.roi;
                     document.getElementById('netBenefits').value = data.netBenefits;
                     document.getElementById('roi').value = data.roi;
                     // Show output section
                     document.getElementById('outputSection').style.display = 'block';
+                    // Autoscroll to output section
+                    document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
                 } else {
                     alert('Invalid response received from the server.');
                 }
