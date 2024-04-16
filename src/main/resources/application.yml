@@ -1,0 +1,27 @@
+spring:
+  application.name: roi
+  jackson:
+    serialization:
+      indent-output: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+management:
+  endpoint.health.show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#debug: true
+#logging:
+#  level:
+#    org.springframework.security.web: DEBUG
+# Define factor implementation classes
+costmodel.factors:
+  infrastructure:
+    className: com.bridgeway.roi.costmodel.factors.CloudCostFactor
+    rateMin: 500
+    rateMax: 2000
+  hr:
+    className: com.bridgeway.roi.costmodel.factors.HrCostFactor
+    baseSalary: 120000
