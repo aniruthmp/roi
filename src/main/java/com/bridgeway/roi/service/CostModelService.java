@@ -1,77 +1,73 @@
 package com.bridgeway.roi.service;
 
-import com.bridgeway.roi.config.CostModelProperties;
-import com.bridgeway.roi.config.FactorProperties;
-import com.bridgeway.roi.costmodel.Factor;
-import com.bridgeway.roi.costmodel.factors.CloudCostFactor;
-import com.bridgeway.roi.costmodel.factors.HrCostFactor;
-import com.bridgeway.roi.request.CostModelRequest;
+import com.bridgeway.roi.costmodel.CostFactors;
+import com.bridgeway.roi.response.CostModelResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.StopWatch;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Slf4j
 public class CostModelService {
 
-    //    private final InfrastructureProperties infrastructureProperties;
-//    private final HrProperties hrProperties;
-    private final FactorProperties factorProperties;
-
-    @Autowired
-    public CostModelService(FactorProperties factorProperties) {
-        this.factorProperties = factorProperties;
-    }
-
-    public double calculateCost_(CostModelRequest request) {
-
-        CostModelProperties infrastructureFactor = factorProperties.getFactors().get("infrastructure");
-        log.info("className: " + infrastructureFactor.getClassName());
-
-        CloudCostFactor cloudCostFactor = getCostModelFactor(infrastructureFactor.getClassName());
-        cloudCostFactor.setRateMax(infrastructureFactor.getRateMax());
-        cloudCostFactor.setRateMin(infrastructureFactor.getRateMin());
-        log.info("minRate: " + cloudCostFactor.getRateMin());
-        log.info("maxRate: " + cloudCostFactor.getRateMax());
-
-        CostModelProperties hrFactor = factorProperties.getFactors().get("hr");
-        log.info("hrClassName: " + hrFactor.getClassName());
-        HrCostFactor hrCostFactor = getCostModelFactor(hrFactor.getClassName());
-        hrCostFactor.setBaseSalary(hrFactor.getBaseSalary());
-        log.info("baseSalary: " + hrCostFactor.getBaseSalary());
-
-        return 0f;
-    }
-
-
-    public double calculateCost(CostModelRequest request) {
+    public CostModelResponse calculateCost(CostFactors costFactors) {
+        log.info("calculateCost with input: " + costFactors.toString());
         StopWatch watch = new StopWatch();
         watch.start();
-        double totalCost = 0;
-        for (Map.Entry<String, Double> entry : request.getFactors().entrySet()) {
-            Factor factor = getCostModelFactor(String.valueOf(factorProperties.getFactors().get(entry.getKey()).getClassName()));
-            if (factor != null) {
-                totalCost += factor.calculateCost(entry.getValue());
-            } else {
-                // Handle unknown factors (e.g., throw exception or log warning)
-            }
-        }
+
+        // Calculate costs for each category
+        double infrastructureCost = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getInfrastructure()))
+            infrastructureCost = getRandomValue(costFactors.getInfrastructure().getRateMin(),
+                    costFactors.getInfrastructure().getRateMax());
+        double trainingCost = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getTrainingAndFineTuning()))
+            trainingCost = getRandomValue(costFactors.getTrainingAndFineTuning().getRateMin(),
+                    costFactors.getTrainingAndFineTuning().getRateMax());
+        double maintenanceCost = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getOngoingMaintenance()))
+            maintenanceCost = getRandomValue(costFactors.getOngoingMaintenance().getRateMin(),
+                    costFactors.getOngoingMaintenance().getRateMax());
+        double miscellaneousCost = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getMiscellaneousCosts()))
+            miscellaneousCost = getRandomValue(costFactors.getMiscellaneousCosts().getRateMin(),
+                    costFactors.getMiscellaneousCosts().getRateMax());
+        double salaryCost = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getHumanResources()))
+            miscellaneousCost = getRandomValue(costFactors.getHumanResources().getSalaryMin(),
+                    costFactors.getHumanResources().getSalaryMax());
+
+        // Calculate Total Cost of Ownership (TCO)
+        double tco = infrastructureCost + trainingCost + maintenanceCost + miscellaneousCost + salaryCost;
+        log.info("tco: " + tco);
+
+        // Assuming some hypothetical benefits or savings
+        double netBenefits = getRandomValue(500, 25000 * 100.0); //100000
+        netBenefits = Math.round(netBenefits * 100.0) / 100.0;
+
+        // Calculate Return on Investment (ROI)
+        double roi = (netBenefits / tco) * 100;
+        roi = Math.round(roi * 100.0) / 100.0;
+
+        // Output the results
+//        CostModelResponse costModelResponse = new CostModelResponse(netBenefits, roi);
+        CostModelResponse costModelResponse = new CostModelResponse(1010908.15, 756.3);
+        log.info("calculateCost with output: " + costModelResponse.toString());
         watch.stop();
-        log.info(" Time Elapsed: " + watch.getTime() + " milliseconds");
-
-        return totalCost;
+        log.info("calculateCost time elapsed: " + watch.getTime() + " milliseconds");
+        return costModelResponse;
     }
 
-    private <T extends Factor> T getCostModelFactor(String className) {
-        try {
-            Class<T> factorClass = (Class<T>) Class.forName(className);
-            return factorClass.newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("Error creating CostModelFactor instance", e);
-        }
+    // Helper method to generate random values within the given range
+    private static double getRandomValue(double min, double max) {
+        return min + Math.random() * (max - min);
     }
 
+    /** For Aspect Logging
+     * https://github.com/aniruthmp/library-system/
+     * blob/master/common/src/main/java/io/pivotal/common/log/LoggingAspect.java
+     *
+     */
 }

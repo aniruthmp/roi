@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cost Details Form</title>
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Cost Details Form</span>
+        </div>
+    </header>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <!-- Guidance -->
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" id="guidance" name="guidance" rows="3" readonly>All provided costs are monthly</textarea>
+                <label class="mdl-textfield__label" for="guidance">Guidance</label>
+            </div>
+            <form id="costDetailsForm" class="mdl-grid" action="#" method="post">
+                <!-- Infrastructure -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Infrastructure</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="infrastructureDescription" name="infrastructureDescription" rows="3" readonly>Cloud computing services needed to host the system.</textarea>
+                        <label class="mdl-textfield__label" for="infrastructureDescription">Infrastructure Description</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="infraRateMin" name="infraRateMin">
+                        <label class="mdl-textfield__label" for="infraRateMin">Rate Min</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="infraRateMax" name="infraRateMax">
+                        <label class="mdl-textfield__label" for="infraRateMax">Rate Max</label>
+                    </div>
+                </div>
+                <!-- Software and Tools -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Software and Tools</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="softwareAndToolsDescription" name="softwareAndToolsDescription" rows="3" readonly>LLMs and other commercial libraries</textarea>
+                        <label class="mdl-textfield__label" for="softwareAndToolsDescription">Software and Tools Description</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="softwareRateMin" name="softwareRateMin">
+                        <label class="mdl-textfield__label" for="softwareRateMin">Rate Min</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="softwareRateMax" name="softwareRateMax">
+                        <label class="mdl-textfield__label" for="softwareRateMax">Rate Max</label>
+                    </div>
+                </div>
+                <!-- Human Resources -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Human Resources</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="humanResourcesDescription" name="humanResourcesDescription" rows="3" readonly>Seasoned developers, data scientists, and DevOps engineers needed for development, model training, and infrastructure management.</textarea>
+                        <label class="mdl-textfield__label" for="humanResourcesDescription">Human Resources Description</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="text" id="hrRoles" name="hrRoles">
+                        <label class="mdl-textfield__label" for="hrRoles">Roles</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="hrSalaryMin" name="hrSalaryMin">
+                        <label class="mdl-textfield__label" for="hrSalaryMin">Salary Min</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="hrSalaryMax" name="hrSalaryMax">
+                        <label class="mdl-textfield__label" for="hrSalaryMax">Salary Max</label>
+                    </div>
+                </div>
+                <!-- Training and Fine Tuning -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Training and Fine Tuning</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="trainingAndFineTuningDescription" name="trainingAndFineTuningDescription" rows="3" readonly>Data acquisition and model customization costs.</textarea>
+                        <label class="mdl-textfield__label" for="trainingAndFineTuningDescription">Training and Fine Tuning Description</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="trainingRateMin" name="trainingRateMin">
+                        <label class="mdl-textfield__label" for="trainingRateMin">Rate Min</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="trainingRateMax" name="trainingRateMax">
+                        <label class="mdl-textfield__label" for="trainingRateMax">Rate Max</label>
+                    </div>
+                </div>
+                <!-- Ongoing Maintenance -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Ongoing Maintenance</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="ongoingMaintenanceDescription" name="ongoingMaintenanceDescription" rows="3" readonly>Monitoring, updates, and retraining costs.</textarea>
+                        <label class="mdl-textfield__label" for="ongoingMaintenanceDescription">Ongoing Maintenance Description</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="maintenanceRateMin" name="maintenanceRateMin">
+                        <label class="mdl-textfield__label" for="maintenanceRateMin">Rate Min</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="maintenanceRateMax" name="maintenanceRateMax">
+                        <label class="mdl-textfield__label" for="maintenanceRateMax">Rate Max</label>
+                    </div>
+                </div>
+                <!-- Miscellaneous Costs -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Miscellaneous Costs</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="miscellaneousCostsDescription" name="miscellaneousCostsDescription" rows="3" readonly>Legal and compliance considerations, along with documentation needs.</textarea>
+                        <label class="mdl-textfield__label" for="miscellaneousCostsDescription">Miscellaneous Costs Description</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="miscRateMin" name="miscRateMin">
+                        <label class="mdl-textfield__label" for="miscRateMin">Rate Min</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="miscRateMax" name="miscRateMax">
+                        <label class="mdl-textfield__label" for="miscRateMax">Rate Max</label>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="submitForm()">Submit</button>
+                </div>
+            </form>
+            <!-- Output Section -->
+            <div id="outputSection" class="mdl-cell mdl-cell--12-col" style="margin-top: 20px; display: none;">
+                <h3>Output</h3>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label mdl-color-text--black" for="netBenefits">Net Benefits</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="netBenefits" readonly>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label mdl-color-text--black" for="roi">ROI</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="roi" readonly>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div id="outputSection" class="mdl-cell mdl-cell--12-col" style="margin-top: 20px; display: none;">
+                <h3>Output</h3>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="netBenefits">Net Benefits</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="netBenefits" readonly>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="roi">ROI</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="roi" readonly>
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+    </main>
+</div>
+
+<script>
+    function submitForm() {
+        var formData = {
+            guidance: document.getElementById('guidance').value,
+            infrastructure: {
+                description: document.getElementById('infraDescription').value,
+                rateMin: parseInt(document.getElementById('infraRateMin').value),
+                rateMax: parseInt(document.getElementById('infraRateMax').value)
+            },
+            software_and_tools: {
+                description: document.getElementById('softwareDescription').value,
+                rateMin: parseInt(document.getElementById('softwareRateMin').value),
+                rateMax: parseInt(document.getElementById('softwareRateMax').value)
+            },
+            human_resources: {
+                description: document.getElementById('hrDescription').value,
+                roles: document.getElementById('hrRoles').value.split(","),
+                salaryMin: parseInt(document.getElementById('hrSalaryMin').value),
+                salaryMax: parseInt(document.getElementById('hrSalaryMax').value)
+            },
+            training_and_fine_tuning: {
+                description: document.getElementById('trainingDescription').value,
+                rateMin: parseInt(document.getElementById('trainingRateMin').value),
+                rateMax: parseInt(document.getElementById('trainingRateMax').value)
+            },
+            ongoing_maintenance: {
+                description: document.getElementById('maintenanceDescription').value,
+                rateMin: parseInt(document.getElementById('maintenanceRateMin').value),
+                rateMax: parseInt(document.getElementById('maintenanceRateMax').value)
+            },
+            miscellaneous_costs: {
+                description: document.getElementById('miscDescription').value,
+                rateMin: parseInt(document.getElementById('miscRateMin').value),
+                rateMax: parseInt(document.getElementById('miscRateMax').value)
+            }
+        };
+
+        // Send the formData to Spring Boot REST API using fetch or XMLHttpRequest
+        fetch('http://localhost:8080/api/roi', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        }).then(response => response.json())
+            .then(data => {
+                // Check if data contains netBenefits and roi fields
+                if (data.hasOwnProperty('netBenefits') && data.hasOwnProperty('roi')) {
+                    // Display output
+                    // document.getElementById('netBenefits').innerHTML = 'Net Benefits: ' + data.netBenefits;
+                    // document.getElementById('roi').innerHTML = 'ROI: ' + data.roi;
+                    document.getElementById('netBenefits').value = data.netBenefits;
+                    document.getElementById('roi').value = data.roi;
+                    // Show output section
+                    document.getElementById('outputSection').style.display = 'block';
+                } else {
+                    alert('Invalid response received from the server.');
+                }
+            }).catch(error => {
+            console.error('Error:', error);
+            alert('Failed to retrieve output.');
+        });
+    }
+</script>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>
