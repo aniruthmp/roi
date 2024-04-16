@@ -22,12 +22,12 @@
     </header>
     <main class="mdl-layout__content">
         <div class="page-content">
-            <!-- Guidance -->
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <textarea class="mdl-textfield__input" type="text" id="guidance" name="guidance" rows="3" readonly>All provided costs are monthly</textarea>
-                <label class="mdl-textfield__label" for="guidance">Guidance</label>
-            </div>
             <form id="costDetailsForm" class="mdl-grid" action="#" method="post">
+                <!-- Guidance -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea class="mdl-textfield__input" type="text" id="guidance" name="guidance" rows="3" readonly>All provided costs are monthly</textarea>
+                    <label class="mdl-textfield__label" for="guidance">Guidance</label>
+                </div>
                 <!-- Infrastructure -->
                 <div class="mdl-cell mdl-cell--4-col">
                     <h4>Infrastructure</h4>
@@ -179,6 +179,7 @@
 
 <script>
     function submitForm() {
+        console.log("Form submitted!"); // Just for testing
         var formData = {
             guidance: document.getElementById('guidance').value,
             infrastructure: {

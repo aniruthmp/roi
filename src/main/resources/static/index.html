@@ -21,12 +21,12 @@
         </div>
     </header>
     <main class="mdl-layout__content">
+        <!-- Guidance -->
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <textarea class="mdl-textfield__input" type="text" id="guidance" name="guidance" rows="3" readonly>All provided costs are monthly</textarea>
+            <label class="mdl-textfield__label" for="guidance">Guidance</label>
+        </div>
         <div class="page-content">
-            <!-- Guidance -->
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <textarea class="mdl-textfield__input" type="text" id="guidance" name="guidance" rows="3" readonly>All provided costs are monthly</textarea>
-                <label class="mdl-textfield__label" for="guidance">Guidance</label>
-            </div>
             <form id="costDetailsForm" class="mdl-grid" action="#" method="post">
                 <!-- Infrastructure -->
                 <div class="mdl-cell mdl-cell--4-col">
@@ -152,63 +152,43 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <div id="outputSection" class="mdl-cell mdl-cell--12-col" style="margin-top: 20px; display: none;">
-                <h3>Output</h3>
-                <div class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label" for="netBenefits">Net Benefits</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="netBenefits" readonly>
-                    </div>
-                </div>
-                <div class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label" for="roi">ROI</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="roi" readonly>
-                    </div>
-                </div>
-            </div>
-            -->
         </div>
     </main>
 </div>
 
 <script>
     function submitForm() {
+        console.log("Form submitted!"); // Just for testing
         var formData = {
-            guidance: document.getElementById('guidance').value,
+            // guidance: document.getElementById('guidance').value,
             infrastructure: {
-                description: document.getElementById('infraDescription').value,
+                // description: document.getElementById('infraDescription').value,
                 rateMin: parseInt(document.getElementById('infraRateMin').value),
                 rateMax: parseInt(document.getElementById('infraRateMax').value)
             },
             software_and_tools: {
-                description: document.getElementById('softwareDescription').value,
+                // description: document.getElementById('softwareDescription').value,
                 rateMin: parseInt(document.getElementById('softwareRateMin').value),
                 rateMax: parseInt(document.getElementById('softwareRateMax').value)
             },
             human_resources: {
-                description: document.getElementById('hrDescription').value,
+                // description: document.getElementById('hrDescription').value,
                 roles: document.getElementById('hrRoles').value.split(","),
                 salaryMin: parseInt(document.getElementById('hrSalaryMin').value),
                 salaryMax: parseInt(document.getElementById('hrSalaryMax').value)
             },
             training_and_fine_tuning: {
-                description: document.getElementById('trainingDescription').value,
+                // description: document.getElementById('trainingDescription').value,
                 rateMin: parseInt(document.getElementById('trainingRateMin').value),
                 rateMax: parseInt(document.getElementById('trainingRateMax').value)
             },
             ongoing_maintenance: {
-                description: document.getElementById('maintenanceDescription').value,
+                // description: document.getElementById('maintenanceDescription').value,
                 rateMin: parseInt(document.getElementById('maintenanceRateMin').value),
                 rateMax: parseInt(document.getElementById('maintenanceRateMax').value)
             },
             miscellaneous_costs: {
-                description: document.getElementById('miscDescription').value,
+                // description: document.getElementById('miscDescription').value,
                 rateMin: parseInt(document.getElementById('miscRateMin').value),
                 rateMax: parseInt(document.getElementById('miscRateMax').value)
             }
