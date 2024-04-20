@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Infrastructure {
-    private String description;
-    private double rateMin;
-    private double rateMax;
+    private int noOfServices;
+    private double rate;
+    private double monthlyCost = 0f;
 }

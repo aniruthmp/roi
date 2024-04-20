@@ -19,10 +19,13 @@
     </header>
     <main class="mdl-layout__content">
         <!-- Guidance -->
+        <!--
+        <h5>Guidance: All provided costs are monthly</h5>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <textarea class="mdl-textfield__input" type="text" id="guidance" name="guidance" rows="3" readonly>All provided costs are monthly</textarea>
             <label class="mdl-textfield__label" for="guidance">Guidance</label>
         </div>
+        -->
         <div class="page-content">
             <form id="costDetailsForm" class="mdl-grid" action="#" method="post">
                 <!-- Infrastructure -->
@@ -32,12 +35,12 @@
                         <textarea class="mdl-textfield__input" type="text" id="infrastructureDescription" name="infrastructureDescription" rows="3" readonly>Cloud computing services needed to host the system.</textarea>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="infraRateMin" name="infraRateMin">
-                        <label class="mdl-textfield__label" for="infraRateMin">Rate Min</label>
+                        <input class="mdl-textfield__input" type="number" id="noOfServices" name="noOfServices">
+                        <label class="mdl-textfield__label" for="noOfServices">No. of services to host</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="infraRateMax" name="infraRateMax">
-                        <label class="mdl-textfield__label" for="infraRateMax">Rate Max</label>
+                        <input class="mdl-textfield__input" type="number" id="infraRate" name="infraRate">
+                        <label class="mdl-textfield__label" for="infraRate">Unit Cloud Hosting cost per month</label>
                     </div>
                 </div>
                 <!-- Software and Tools -->
@@ -47,38 +50,12 @@
                         <textarea class="mdl-textfield__input" type="text" id="softwareAndToolsDescription" name="softwareAndToolsDescription" rows="3" readonly>LLMs and other commercial libraries</textarea>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="softwareRateMin" name="softwareRateMin">
-                        <label class="mdl-textfield__label" for="softwareRateMin">Rate Min</label>
+                        <input class="mdl-textfield__input" type="number" id="noOfUsers" name="noOfUsers">
+                        <label class="mdl-textfield__label" for="noOfUsers">No. of Users</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="softwareRateMax" name="softwareRateMax">
-                        <label class="mdl-textfield__label" for="softwareRateMax">Rate Max</label>
-                    </div>
-                </div>
-                <!-- Human Resources -->
-                <div class="mdl-cell mdl-cell--4-col">
-                    <h4>Human Resources</h4>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <textarea class="mdl-textfield__input" type="text" id="humanResourcesDescription" name="humanResourcesDescription" rows="3" readonly>Seasoned developers, data scientists, and DevOps engineers needed for development, model training, and infrastructure management.</textarea>
-                    </div>
-                    <!-- Multi-select dropdown for hrRoles -->
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <select multiple class="mdl-textfield__input" id="hrRoles" name="hrRoles">
-                            <option value="Developer">Developer</option>
-                            <option value="Designer">Designer</option>
-                            <option value="Data Scientist">Data Scientist</option>
-                            <option value="Engineer">Engineer</option>
-                            <option value="Product Manager">Product Manager</option>
-                        </select>
-                        <label class="mdl-textfield__label" for="hrRoles">HR Roles</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="hrSalaryMin" name="hrSalaryMin">
-                        <label class="mdl-textfield__label" for="hrSalaryMin">Salary Min</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="hrSalaryMax" name="hrSalaryMax">
-                        <label class="mdl-textfield__label" for="hrSalaryMax">Salary Max</label>
+                        <input class="mdl-textfield__input" type="number" id="llmCost" name="llmCost">
+                        <label class="mdl-textfield__label" for="llmCost">Per User Cost</label>
                     </div>
                 </div>
                 <!-- Training and Fine Tuning -->
@@ -88,12 +65,12 @@
                         <textarea class="mdl-textfield__input" type="text" id="trainingAndFineTuningDescription" name="trainingAndFineTuningDescription" rows="3" readonly>Data acquisition and model customization costs.</textarea>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="trainingRateMin" name="trainingRateMin">
-                        <label class="mdl-textfield__label" for="trainingRateMin">Rate Min</label>
+                        <input class="mdl-textfield__input" type="number" id="noOfTrainingHours" name="noOfTrainingHours">
+                        <label class="mdl-textfield__label" for="noOfTrainingHours">No. of hours spent</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="trainingRateMax" name="trainingRateMax">
-                        <label class="mdl-textfield__label" for="trainingRateMax">Rate Max</label>
+                        <input class="mdl-textfield__input" type="number" id="trainingRate" name="trainingRate">
+                        <label class="mdl-textfield__label" for="trainingRate">Hourly Rate</label>
                     </div>
                 </div>
                 <!-- Ongoing Maintenance -->
@@ -103,27 +80,35 @@
                         <textarea class="mdl-textfield__input" type="text" id="ongoingMaintenanceDescription" name="ongoingMaintenanceDescription" rows="3" readonly>Monitoring, updates, and retraining costs.</textarea>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="maintenanceRateMin" name="maintenanceRateMin">
-                        <label class="mdl-textfield__label" for="maintenanceRateMin">Rate Min</label>
+                        <input class="mdl-textfield__input" type="number" id="noOfMaintenanceHours" name="noOfMaintenanceHours">
+                        <label class="mdl-textfield__label" for="noOfMaintenanceHours">No. of hours spent</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="maintenanceRateMax" name="maintenanceRateMax">
-                        <label class="mdl-textfield__label" for="maintenanceRateMax">Rate Max</label>
+                        <input class="mdl-textfield__input" type="number" id="maintenanceRate" name="maintenanceRate">
+                        <label class="mdl-textfield__label" for="maintenanceRate">Hourly Rate</label>
                     </div>
                 </div>
-                <!-- Miscellaneous Costs -->
+                <!-- Value Fields -->
                 <div class="mdl-cell mdl-cell--4-col">
-                    <h4>Miscellaneous Costs</h4>
+                    <h4 style="color: forestgreen">Revenue Gain</h4>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <textarea class="mdl-textfield__input" type="text" id="miscellaneousCostsDescription" name="miscellaneousCostsDescription" rows="3" readonly>Legal and compliance considerations, along with documentation needs.</textarea>
+                        <textarea class="mdl-textfield__input" type="text" id="miscellaneousCostsDescription" name="miscellaneousCostsDescription" rows="3" readonly>Revenue Gain, Cost Reduced, Risk Avoided</textarea>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="miscRateMin" name="miscRateMin">
-                        <label class="mdl-textfield__label" for="miscRateMin">Rate Min</label>
+                        <input class="mdl-textfield__input" type="number" id="additionalRevenue" name="additionalRevenue">
+                        <label class="mdl-textfield__label" for="additionalRevenue">Additional Revenue</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="number" id="miscRateMax" name="miscRateMax">
-                        <label class="mdl-textfield__label" for="miscRateMax">Rate Max</label>
+                        <input class="mdl-textfield__input" type="number" id="costReduction" name="costReduction">
+                        <label class="mdl-textfield__label" for="costReduction">Cost Reduction</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="productivityHoursGained" name="productivityHoursGained">
+                        <label class="mdl-textfield__label" for="productivityHoursGained">Productivity Hours Gained</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="riskAvoided" name="riskAvoided">
+                        <label class="mdl-textfield__label" for="riskAvoided">Risk avoided</label>
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col">
@@ -135,10 +120,18 @@
                 <h3>Output</h3>
                 <div class="mdl-cell mdl-cell--12-col">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label mdl-color-text--black" for="netBenefits">Net Benefits</label>
+                        <label class="mdl-textfield__label mdl-color-text--black" for="monthlyCost">Monthly Costs</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="netBenefits" readonly>
+                        <input class="mdl-textfield__input" type="text" id="monthlyCost" readonly>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label mdl-color-text--black" for="monthlyGain">Monthly Gain</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="monthlyGain" readonly>
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--12-col">
@@ -157,41 +150,31 @@
 <script>
     function submitForm() {
         var formData = {
-            // guidance: document.getElementById('guidance').value,
             infrastructure: {
-                // description: document.getElementById('infraDescription').value,
-                rateMin: parseInt(document.getElementById('infraRateMin').value),
-                rateMax: parseInt(document.getElementById('infraRateMax').value)
+                noOfServices: parseInt(document.getElementById('noOfServices').value),
+                rate: parseFloat(document.getElementById('infraRate').value)
             },
             softwareAndTools: {
-                // description: document.getElementById('softwareDescription').value,
-                rateMin: parseInt(document.getElementById('softwareRateMin').value),
-                rateMax: parseInt(document.getElementById('softwareRateMax').value)
-            },
-            humanResources: {
-                // description: document.getElementById('hrDescription').value,
-                roles: Array.from(document.getElementById("hrRoles").selectedOptions).map(option => option.value),
-                salaryMin: parseInt(document.getElementById('hrSalaryMin').value),
-                salaryMax: parseInt(document.getElementById('hrSalaryMax').value)
+                noOfUsers: parseInt(document.getElementById('noOfUsers').value),
+                llmCost: parseFloat(document.getElementById('llmCost').value)
             },
             trainingAndFineTuning: {
-                // description: document.getElementById('trainingDescription').value,
-                rateMin: parseInt(document.getElementById('trainingRateMin').value),
-                rateMax: parseInt(document.getElementById('trainingRateMax').value)
+                noOfHours: parseInt(document.getElementById('noOfTrainingHours').value),
+                rate: parseFloat(document.getElementById('trainingRate').value)
             },
             ongoingMaintenance: {
-                // description: document.getElementById('maintenanceDescription').value,
-                rateMin: parseInt(document.getElementById('maintenanceRateMin').value),
-                rateMax: parseInt(document.getElementById('maintenanceRateMax').value)
+                noOfHours: parseInt(document.getElementById('noOfMaintenanceHours').value),
+                rate: parseFloat(document.getElementById('maintenanceRate').value)
             },
-            miscellaneousCosts: {
-                // description: document.getElementById('miscDescription').value,
-                rateMin: parseInt(document.getElementById('miscRateMin').value),
-                rateMax: parseInt(document.getElementById('miscRateMax').value)
+            value: {
+                additionalRevenue: parseFloat(document.getElementById('additionalRevenue').value),
+                costReduction: parseFloat(document.getElementById('costReduction').value),
+                productivityHoursGained: parseInt(document.getElementById('productivityHoursGained').value),
+                riskAvoided: parseFloat(document.getElementById('riskAvoided').value)
             }
         };
 
-        // console.log(JSON.stringify(formData));
+        console.log(JSON.stringify(formData));
         // Send the formData to Spring Boot REST API using fetch or XMLHttpRequest
         fetch('http://localhost:8080/api/roi', {
             method: 'POST',
@@ -202,10 +185,12 @@
         }).then(response => response.json())
             .then(data => {
                 // Check if data contains netBenefits and roi fields
-                if (data.hasOwnProperty('netBenefits') && data.hasOwnProperty('roi')) {
+                if (data.hasOwnProperty('monthlyCost') &&
+                    data.hasOwnProperty('monthlyGain') && data.hasOwnProperty('roi')) {
                     // Display output
-                    document.getElementById('netBenefits').value = data.netBenefits;
-                    document.getElementById('roi').value = data.roi;
+                    document.getElementById('monthlyCost').value = data.monthlyCost;
+                    document.getElementById('monthlyGain').value = data.monthlyGain;
+                    document.getElementById('roi').value = data.roi + "%";
                     // Show output section
                     document.getElementById('outputSection').style.display = 'block';
                     // Autoscroll to output section

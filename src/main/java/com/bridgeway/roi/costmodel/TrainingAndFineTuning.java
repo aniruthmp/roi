@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class TrainingAndFineTuning {
-    private String description;
-    private double rateMin;
-    private double rateMax;
+    private short noOfHours;
+    private double rate;
+    private double monthlyCost = 0f;
 }

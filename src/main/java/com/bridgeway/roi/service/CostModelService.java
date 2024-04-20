@@ -18,50 +18,62 @@ public class CostModelService {
 
         // Calculate costs for each category
         double infrastructureCost = 0f;
-        if (ObjectUtils.isNotEmpty(costFactors.getInfrastructure()))
-            infrastructureCost = getRandomValue(costFactors.getInfrastructure().getRateMin(),
-                    costFactors.getInfrastructure().getRateMax());
+        if (ObjectUtils.isNotEmpty(costFactors.getInfrastructure())) {
+            infrastructureCost = costFactors.getInfrastructure().getNoOfServices() *
+                    costFactors.getInfrastructure().getRate();
+            costFactors.getInfrastructure().setMonthlyCost(infrastructureCost);
+        }
+        log.info("infrastructureCost: " + infrastructureCost);
+
+        double softwareCost = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getSoftwareAndTools())) {
+            softwareCost = costFactors.getSoftwareAndTools().getNoOfUsers() *
+                    costFactors.getSoftwareAndTools().getLlmCost();
+            costFactors.getSoftwareAndTools().setMonthlyCost(softwareCost);
+        }
+        log.info("softwareCost: " + softwareCost);
+
         double trainingCost = 0f;
-        if (ObjectUtils.isNotEmpty(costFactors.getTrainingAndFineTuning()))
-            trainingCost = getRandomValue(costFactors.getTrainingAndFineTuning().getRateMin(),
-                    costFactors.getTrainingAndFineTuning().getRateMax());
+        if (ObjectUtils.isNotEmpty(costFactors.getTrainingAndFineTuning())) {
+            trainingCost = costFactors.getTrainingAndFineTuning().getNoOfHours() *
+                    costFactors.getTrainingAndFineTuning().getRate();
+            costFactors.getTrainingAndFineTuning().setMonthlyCost(trainingCost);
+        }
+        log.info("trainingCost: " + trainingCost);
+
         double maintenanceCost = 0f;
-        if (ObjectUtils.isNotEmpty(costFactors.getOngoingMaintenance()))
-            maintenanceCost = getRandomValue(costFactors.getOngoingMaintenance().getRateMin(),
-                    costFactors.getOngoingMaintenance().getRateMax());
-        double miscellaneousCost = 0f;
-        if (ObjectUtils.isNotEmpty(costFactors.getMiscellaneousCosts()))
-            miscellaneousCost = getRandomValue(costFactors.getMiscellaneousCosts().getRateMin(),
-                    costFactors.getMiscellaneousCosts().getRateMax());
-        double salaryCost = 0f;
-        if (ObjectUtils.isNotEmpty(costFactors.getHumanResources()))
-            miscellaneousCost = getRandomValue(costFactors.getHumanResources().getSalaryMin(),
-                    costFactors.getHumanResources().getSalaryMax());
+        if (ObjectUtils.isNotEmpty(costFactors.getOngoingMaintenance())) {
+            maintenanceCost = costFactors.getOngoingMaintenance().getNoOfHours() *
+                    costFactors.getOngoingMaintenance().getRate();
+            costFactors.getOngoingMaintenance().setMonthlyCost(maintenanceCost);
+        }
+        log.info("maintenanceCost: " + maintenanceCost);
 
         // Calculate Total Cost of Ownership (TCO)
-        double tco = infrastructureCost + trainingCost + maintenanceCost + miscellaneousCost + salaryCost;
-        log.info("tco: " + tco);
+        double totalMonthlyCost = infrastructureCost + softwareCost + trainingCost + maintenanceCost;
+        log.info("totalMonthlyCost: " + totalMonthlyCost);
 
-        // Assuming some hypothetical benefits or savings
-        double netBenefits = getRandomValue(500, 25000 * 100.0); //100000
-        netBenefits = Math.round(netBenefits * 100.0) / 100.0;
+        // Calculate Value
+        double totalMonthlyValue = 0f;
+        if (ObjectUtils.isNotEmpty(costFactors.getValue())) {
+            totalMonthlyValue = costFactors.getValue().getAdditionalRevenue() +
+                    costFactors.getValue().getCostReduction() +
+                    (costFactors.getValue().getProductivityHoursGained() * 60) + //TODO: Check with Jesse
+                    costFactors.getValue().getRiskAvoided();
+            costFactors.getValue().setTotalMonthlyValue(totalMonthlyValue);
+        }
+        log.info("totalMonthlyValue: " + totalMonthlyValue);
 
         // Calculate Return on Investment (ROI)
-        double roi = (netBenefits / tco) * 100;
+        double roi = ((totalMonthlyValue - totalMonthlyCost) / totalMonthlyCost) * 100;
         roi = Math.round(roi * 100.0) / 100.0;
 
         // Output the results
-        CostModelResponse costModelResponse = new CostModelResponse(netBenefits, roi);
-//        CostModelResponse costModelResponse = new CostModelResponse(1010908.15, 756.3);
+        CostModelResponse costModelResponse = new CostModelResponse(totalMonthlyCost, totalMonthlyValue, roi);
         log.info("calculateCost with output: " + costModelResponse.toString());
         watch.stop();
         log.info("calculateCost time elapsed: " + watch.getTime() + " milliseconds");
         return costModelResponse;
-    }
-
-    // Helper method to generate random values within the given range
-    private static double getRandomValue(double min, double max) {
-        return min + Math.random() * (max - min);
     }
 
     /** For Aspect Logging

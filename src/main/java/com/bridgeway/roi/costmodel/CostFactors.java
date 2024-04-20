@@ -13,4 +13,5 @@ public class CostFactors {
     private TrainingAndFineTuning trainingAndFineTuning;
     private OngoingMaintenance ongoingMaintenance;
     private MiscellaneousCosts miscellaneousCosts;
+    private Value value;
 }

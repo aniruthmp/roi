@@ -8,6 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CostModelResponse {
-    double netBenefits;
+    double monthlyCost;
+    double monthlyGain;
     double roi;
 }

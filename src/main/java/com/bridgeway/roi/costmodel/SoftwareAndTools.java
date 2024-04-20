@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SoftwareAndTools {
-    private String description;
-    private double rateMin;
-    private double rateMax;
+    private int noOfUsers;
+    private double llmCost;
+    private double monthlyCost = 0f;
 }
