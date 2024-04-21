@@ -2,211 +2,258 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROI Calculation</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .title {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            font-size: 16px;
-        }
-        input[type="text"], select[multiple] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            background-color: #4267B2;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #405d9b;
-        }
-        .output {
-            margin-top: 20px;
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
-        }
-        .output label {
-            font-weight: normal;
-            font-size: 18px;
-        }
-        .output input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-bottom: 1px solid #ccc;
-            font-size: 18px;
-            background-color: transparent;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="title">Cost Details Form</div>
-    <form id="costDetailsForm">
-        <div class="form-group">
-            <label for="guidance">Guidance</label>
-            <input type="text" id="guidance" name="guidance" value="All provided costs are monthly" readonly>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title" style="text-align: center; width: 100%;">ROI Calculation</span>
         </div>
-        <div class="form-group">
-            <label for="infrastructureDescription">Infrastructure Description</label>
-            <input type="text" id="infrastructureDescription" name="infrastructureDescription" value="Cloud computing services needed to host the system." readonly>
+    </header>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <form id="costDetailsForm" class="mdl-grid" action="#" method="post">
+                <!-- Infrastructure -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Infrastructure</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="infrastructureDescription"
+                                  name="infrastructureDescription" rows="3" readonly>Cloud computing services needed to host the system.</textarea>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="noOfServices"
+                               name="noOfServices" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="noOfServices">No. of services to host</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="infraRate" name="infraRate">
+                        <label class="mdl-textfield__label" for="infraRate">Unit Cloud Hosting cost per month</label>
+                    </div>
+                </div>
+                <!-- Software and Tools -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Software and Tools</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="softwareAndToolsDescription"
+                                  name="softwareAndToolsDescription" rows="3" readonly>LLMs and other commercial libraries</textarea>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="noOfUsers"
+                               name="noOfUsers" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="noOfUsers">No. of Users</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="llmCost"
+                               name="llmCost" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="llmCost">Per User Cost</label>
+                    </div>
+                </div>
+                <!-- Training and Fine Tuning -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Training and Fine Tuning</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="trainingAndFineTuningDescription"
+                                  name="trainingAndFineTuningDescription" rows="3" readonly>Data acquisition and model customization costs.</textarea>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="noOfTrainingHours"
+                               pattern="[0-9]*" oninput="updateTuning()" name="noOfTrainingHours">
+                        <label class="mdl-textfield__label" for="noOfTrainingHours">No. of hours spent</label>
+                    </div>
+                    <div>
+                        <span id="trainingRate">0</span>
+                    </div>
+                </div>
+                <!-- Ongoing Maintenance -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4>Ongoing Maintenance</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="ongoingMaintenanceDescription"
+                                  name="ongoingMaintenanceDescription" rows="3" readonly>Monitoring, updates, and retraining costs.</textarea>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="noOfMaintenanceHours"
+                               name="noOfMaintenanceHours" pattern="[0-9]*" oninput="updateMaintenance()">
+                        <label class="mdl-textfield__label" for="noOfMaintenanceHours">No. of hours spent</label>
+                    </div>
+                    <div>
+                        <span id="maintenanceRate">0</span>
+                    </div>
+                </div>
+                <!-- Value Fields -->
+                <div class="mdl-cell mdl-cell--4-col">
+                    <h4 style="color: forestgreen">Revenue Gain</h4>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" id="miscellaneousCostsDescription"
+                                  name="miscellaneousCostsDescription" rows="3" readonly>Revenue Gain, Cost Reduced, Risk Avoided</textarea>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="additionalRevenue"
+                               name="additionalRevenue" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="additionalRevenue">Additional Revenue</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="costReduction"
+                               name="costReduction" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="costReduction">Cost Reduction</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="productivityHoursGained"
+                               name="productivityHoursGained" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="productivityHoursGained">Productivity Hours
+                            Gained</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input class="mdl-textfield__input" type="number" id="riskAvoided"
+                               name="riskAvoided" pattern="[0-9]*" oninput="updateRoi()">
+                        <label class="mdl-textfield__label" for="riskAvoided">Risk avoided</label>
+                    </div>
+                </div>
+            </form>
+            <!-- Output Section -->
+            <div id="outputSection" class="mdl-cell mdl-cell--12-col" style="margin-top: 20px;">
+                <h3>Output</h3>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label mdl-color-text--black" for="monthlyCost">Monthly
+                            Costs</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="monthlyCost" readonly>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label mdl-color-text--black" for="monthlyGain">Monthly Gain</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="monthlyGain" readonly>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label mdl-color-text--black" for="roi">ROI</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="roi" readonly>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="infrastructureRateMin">Infrastructure Rate Min</label>
-            <input type="text" id="infrastructureRateMin" name="infrastructureRateMin" value="57500" readonly>
-        </div>
-        <div class="form-group">
-            <label for="infrastructureRateMax">Infrastructure Rate Max</label>
-            <input type="text" id="infrastructureRateMax" name="infrastructureRateMax" value="219500" readonly>
-        </div>
-        <div class="form-group">
-            <label for="softwareAndToolsDescription">Software and Tools Description</label>
-            <input type="text" id="softwareAndToolsDescription" name="softwareAndToolsDescription" value="LLMs and other commercial libraries" readonly>
-        </div>
-        <div class="form-group">
-            <label for="softwareAndToolsRateMin">Software and Tools Rate Min</label>
-            <input type="text" id="softwareAndToolsRateMin" name="softwareAndToolsRateMin" value="9000" readonly>
-        </div>
-        <div class="form-group">
-            <label for="softwareAndToolsRateMax">Software and Tools Rate Max</label>
-            <input type="text" id="softwareAndToolsRateMax" name="softwareAndToolsRateMax" value="219500" readonly>
-        </div>
-        <div class="form-group">
-            <label for="humanResourcesDescription">Human Resources Description</label>
-            <input type="text" id="humanResourcesDescription" name="humanResourcesDescription" value="Seasoned developers, data scientists, and DevOps engineers needed for development, model training, and infrastructure management." readonly>
-        </div>
-        <div class="form-group">
-            <label for="humanResourcesSalaryMin">Human Resources Salary Min</label>
-            <input type="text" id="humanResourcesSalaryMin" name="humanResourcesSalaryMin" value="7500" readonly>
-        </div>
-        <div class="form-group">
-            <label for="humanResourcesSalaryMax">Human Resources Salary Max</label>
-            <input type="text" id="humanResourcesSalaryMax" name="humanResourcesSalaryMax" value="18000" readonly>
-        </div>
-        <div class="form-group">
-            <label for="trainingAndFineTuningDescription">Training and Fine Tuning Description</label>
-            <input type="text" id="trainingAndFineTuningDescription" name="trainingAndFineTuningDescription" value="Data acquisition and model customization costs." readonly>
-        </div>
-        <div class="form-group">
-            <label for="trainingAndFineTuningRateMin">Training and Fine Tuning Rate Min</label>
-            <input type="text" id="trainingAndFineTuningRateMin" name="trainingAndFineTuningRateMin" value="5500" readonly>
-        </div>
-        <div class="form-group">
-            <label for="trainingAndFineTuningRateMax">Training and Fine Tuning Rate Max</label>
-            <input type="text" id="trainingAndFineTuningRateMax" name="trainingAndFineTuningRateMax" value="21500" readonly>
-        </div>
-        <div class="form-group">
-            <label for="ongoingMaintenanceDescription">Ongoing Maintenance Description</label>
-            <input type="text" id="ongoingMaintenanceDescription" name="ongoingMaintenanceDescription" value="Monitoring, updates, and retraining costs." readonly>
-        </div>
-        <div class="form-group">
-            <label for="ongoingMaintenanceRateMin">Ongoing Maintenance Rate Min</label>
-            <input type="text" id="ongoingMaintenanceRateMin" name="ongoingMaintenanceRateMin" value="860" readonly>
-        </div>
-        <div class="form-group">
-            <label for="ongoingMaintenanceRateMax">Ongoing Maintenance Rate Max</label>
-            <input type="text" id="ongoingMaintenanceRateMax" name="ongoingMaintenanceRateMax" value="5000" readonly>
-        </div>
-        <div class="form-group">
-            <label for="miscellaneousCostsDescription">Miscellaneous Costs Description</label>
-            <input type="text" id="miscellaneousCostsDescription" name="miscellaneousCostsDescription" value="Legal and compliance considerations, along with documentation needs." readonly>
-        </div>
-        <div class="form-group">
-            <label for="miscellaneousCostsRateMin">Miscellaneous Costs Rate Min</label>
-            <input type="text" id="miscellaneousCostsRateMin" name="miscellaneousCostsRateMin" value="7400" readonly>
-        </div>
-        <div class="form-group">
-            <label for="miscellaneousCostsRateMax">Miscellaneous Costs Rate Max</label>
-            <input type="text" id="miscellaneousCostsRateMax" name="miscellaneousCostsRateMax" value="32800" readonly>
-        </div>
-        <!-- Multi-select dropdown for hrRoles -->
-        <div class="form-group">
-            <label for="hrRoles">HR Roles</label>
-            <select multiple id="hrRoles" name="hrRoles" disabled>
-                <option value="Developers" selected>Developers</option>
-                <option value="Data Scientists">Data Scientists</option>
-                <option value="Engineers" selected>Engineers</option>
-            </select>
-        </div>
-        <!-- Other form elements -->
-        <button type="button" onclick="submitForm()">Submit</button>
-    </form>
-    <!-- Output Section -->
-    <div class="output" id="outputSection" style="display: none;">
-        <h3>Output</h3>
-        <div class="form-group">
-            <label for="netBenefits">Net Benefits</label>
-            <input type="text" id="netBenefits" readonly>
-        </div>
-        <div class="form-group">
-            <label for="roi">ROI</label>
-            <input type="text" id="roi" readonly>
-        </div>
-    </div>
+    </main>
 </div>
 
 <script>
-    function submitForm() {
-        console.log("Form submitted!"); // Just for testing
-        var formData = {
-            guidance: document.getElementById("guidance").value,
-            infrastructureDescription: document.getElementById("infrastructureDescription").value,
-            infrastructureRateMin: document.getElementById("infrastructureRateMin").value,
-            infrastructureRateMax: document.getElementById("infrastructureRateMax").value,
-            softwareAndToolsDescription: document.getElementById("softwareAndToolsDescription").value,
-            softwareAndToolsRateMin: document.getElementById("softwareAndToolsRateMin").value,
-            softwareAndToolsRateMax: document.getElementById("softwareAndToolsRateMax").value,
-            humanResourcesDescription: document.getElementById("humanResourcesDescription").value,
-            humanResourcesSalaryMin: document.getElementById("humanResourcesSalaryMin").value,
-            humanResourcesSalaryMax: document.getElementById("humanResourcesSalaryMax").value,
-            trainingAndFineTuningDescription: document.getElementById("trainingAndFineTuningDescription").value,
-            trainingAndFineTuningRateMin: document.getElementById("trainingAndFineTuningRateMin").value,
-            trainingAndFineTuningRateMax: document.getElementById("trainingAndFineTuningRateMax").value,
-            ongoingMaintenanceDescription: document.getElementById("ongoingMaintenanceDescription").value,
-            ongoingMaintenanceRateMin: document.getElementById("ongoingMaintenanceRateMin").value,
-            ongoingMaintenanceRateMax: document.getElementById("ongoingMaintenanceRateMax").value,
-            miscellaneousCostsDescription: document.getElementById("miscellaneousCostsDescription").value,
-            miscellaneousCostsRateMin: document.getElementById("miscellaneousCostsRateMin").value,
-            miscellaneousCostsRateMax: document.getElementById("miscellaneousCostsRateMax").value,
-            hrRoles: Array.from(document.getElementById("hrRoles").selectedOptions).map(option => option.value)
-        };
-        console.log(formData); // Just for testing
-        // Here you can add the logic to send the form data to your Spring Boot API
+    function updateMaintenance() {
+        let maintCost = document.getElementById('noOfMaintenanceHours');
+        if (!!maintCost.value) {
+            maintCost = parseInt(maintCost.value) * 60;
+        } else {
+            maintCost = 0;
+        }
+        document.getElementById("maintenanceRate").innerText = "$" + maintCost;
+        document.getElementById("maintenanceRate").value = maintCost;
     }
+
+    function updateTuning() {
+        let trainingCost = document.getElementById('noOfTrainingHours');
+        if (!!trainingCost.value) {
+            trainingCost = parseInt(trainingCost.value) * 60;
+        } else {
+            trainingCost = 0;
+        }
+        document.getElementById("trainingRate").innerText = "$" + trainingCost;
+        document.getElementById("trainingRate").value = trainingCost;
+    }
+
+    function updateRoi() {
+        let noOfServices = document.getElementById('noOfServices');
+        let infraRate = document.getElementById('infraRate');
+        let infrastructureCost = 0;
+        if (!!noOfServices.value && !!infraRate.value) {
+            noOfServices = parseInt(noOfServices.value);
+            infraRate = parseInt(infraRate.value);
+            infrastructureCost = noOfServices * infraRate;
+        }
+
+        let noOfUsers = document.getElementById('noOfUsers');
+        let llmCost = document.getElementById('llmCost');
+        let softwareCost = 0;
+        if (!!noOfUsers.value && !!llmCost.value) {
+            noOfUsers = parseInt(noOfUsers.value);
+            llmCost = parseInt(llmCost.value);
+            softwareCost = noOfUsers * llmCost;
+        }
+
+        let trainingCost = document.getElementById('trainingRate');
+        if (!!trainingCost.value) {
+            trainingCost = parseInt(trainingCost.value);
+        } else {
+            trainingCost = 0;
+        }
+        let maintenanceCost = document.getElementById('maintenanceRate');
+        if (!!maintenanceCost.value) {
+            maintenanceCost = parseInt(maintenanceCost.value);
+        } else {
+            maintenanceCost = 0;
+        }
+
+        let additionalRevenue = document.getElementById('additionalRevenue');
+        if (!!additionalRevenue.value) {
+            additionalRevenue = parseInt(additionalRevenue.value);
+        } else {
+            additionalRevenue = 0;
+        }
+        let costReduction = document.getElementById('costReduction');
+        if (!!costReduction.value) {
+            costReduction = parseInt(costReduction.value);
+        } else {
+            costReduction = 0;
+        }
+
+        let productivityHoursGained = document.getElementById('productivityHoursGained');
+        if (!!productivityHoursGained.value) {
+            productivityHoursGained = parseInt(productivityHoursGained.value);
+        } else {
+            productivityHoursGained = 0;
+        }
+        let riskAvoided = document.getElementById('riskAvoided');
+        if (!!riskAvoided.value) {
+            riskAvoided = parseInt(riskAvoided.value);
+        } else {
+            riskAvoided = 0;
+        }
+
+        let totalMonthlyCost = infrastructureCost + softwareCost + trainingCost + maintenanceCost;
+
+        let totalMonthlyValue = 0;
+        totalMonthlyValue = additionalRevenue + costReduction + riskAvoided +
+            (productivityHoursGained * 60); //TODO: Check with Jesse
+
+        document.getElementById('monthlyCost').value = "$" + totalMonthlyCost;
+        document.getElementById('monthlyGain').value = "$" + totalMonthlyValue;
+
+        if(totalMonthlyCost > 0) {
+            let roi = ((totalMonthlyValue - totalMonthlyCost) / totalMonthlyCost) * 100;
+            roi = Math.round(roi * 100) / 100;
+            document.getElementById('roi').value = roi + "%";
+        }
+
+    }
+
 </script>
+</body>
+</html>
+</title>
+</head>
+<body>
+
 </body>
 </html>
